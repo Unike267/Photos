@@ -1,0 +1,203 @@
+\documentclass[]{standalone}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{tikz}
+\usepackage{dirtytalk}
+\usepackage{amsmath} % for \longrightarrow
+\usetikzlibrary {decorations.pathmorphing,shadows} 
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary {arrows.meta} 
+\usetikzlibrary{shapes,arrows}
+\usepackage{relsize}
+\usepackage[a4paper, total={8in, 8in}]{geometry}
+
+\tikzset{fontscale/.style = {font=\relsize{#1}}}
+
+\begin{document}
+\pagestyle{empty}
+
+\pgfdeclarelayer{background}
+\pgfsetlayers{background,main}
+
+%DEF RECTANGLES:
+%SCRATCH
+\def\SC{4,2}
+%BASE
+\def\BS{4,2}
+%BUILD
+\def\BD{4,2}
+%DEPENDENT TARGET
+\def\DP{4,2}
+%ANOTHER DEPENDENT TARGET
+\def\ADP{4,2}
+
+%ABSTRACT BACKGROUND
+\def\ABSBACK{28,5}
+
+%BACKGROUND
+\def\BACK{42,19}
+
+%DEF CLOUDS:
+%LINUX DISTRO
+\def\LXh{-6.5}
+\def\LXv{10}
+%BARE CONTAINER
+\def\BCh{-6.5}
+\def\BCv{2.5}
+
+%GAPS:
+%Vertical gap
+\def\gapv{0}
+
+%DEF DISPLACEMENTS:
+%BASE
+\def\BSdisplah{0}
+\def\BSdisplav{9+\gapv}
+\def\BSh{2}
+\def\BSv{1}
+%BUILD
+\def\BDdisplah{10}
+\def\BDdisplav{5+\gapv}
+\def\BDh{2}
+\def\BDv{1}
+%SCRATCH
+\def\SCdisplah{18}
+\def\SCdisplav{1.5+\gapv}
+\def\SCh{2}
+\def\SCv{1}
+%SOFTWARE DEPENDENT TARGET
+\def\DPdisplah{26}
+\def\DPdisplav{9+\gapv}
+\def\DPh{2}
+\def\DPv{1}
+%ANOTHER SOFTWARE DEPENDENT TARGET
+\def\ADPdisplah{26}
+\def\ADPdisplav{14+\gapv}
+\def\ADPh{2}
+\def\ADPv{1}
+
+%ABSTRACT:
+\def\ABSdisplahM{6}
+\def\ABSdisplavM{16.5+\gapv}
+\def\ABSdisplahN{5.8}
+\def\ABSdisplavN{15.5+\gapv}
+\def\ABSdisplahO{5.9}
+\def\ABSdisplavO{14.5+\gapv}
+\def\ABSdisplahP{1}
+\def\ABSdisplavP{13.5+\gapv}
+
+%ABSTRACT BACKGROUND
+\def\ABSBACKdisplah{-8}
+\def\ABSBACKdisplav{12.5+\gapv}
+
+%BACKGROUND
+\def\BACKdisplah{-9.5}
+\def\BACKdisplav{-0.5+\gapv}
+
+%TEXT:
+
+%FROM LINUX DISTRO
+\def\FLdisplah{-2.25}
+\def\FLdisplav{10.5}
+%FROM SCRATCH
+\def\FSdisplah{16}
+\def\FSdisplav{3}
+%FROM BASE-SOFTWARE DEPENDENT TARGET
+\def\FBDdisplah{24.5}
+\def\FBDdisplav{10.5}
+%FROM BASE-BUILD
+\def\FBBdisplah{8.5}
+\def\FBBdisplav{6.5}
+%COPY BUILD-SCRATCH
+\def\CBSdisplah{18}
+\def\CBSdisplav{6}
+%COPY SCRATCH-SOFTWARE DEPENDENT TARGET
+\def\CSDdisplah{26.25}
+\def\CSDdisplav{2.5}
+
+\begin{tikzpicture}
+\node (center) {};
+\path (center)+(0,-5) node (name) {};
+%\path (center)+(\FMCdisplah,0) node (name) {ce};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%       ABSTRACT      %%%%%%%%%%%%%%%%%%%%%%%%%
+\path (center)+(\ABSdisplahM,\ABSdisplavM) node [fontscale=3](name) {Example of building a \say{SOFTWARE DEPENDENT} image, with the software installation performed through};
+\path (center)+(\ABSdisplahN,\ABSdisplavN) node [fontscale=3](name) { a SCRATCH image. In this approach, the compiled software binaries are copied FROM the \say{BUILD} image};
+\path (center)+(\ABSdisplahO,\ABSdisplavO) node [fontscale=3](name) { to the \say{SCRATCH} image. This SCRATCH image then transports the installation in a lighter form, allowing};
+\path (center)+(\ABSdisplahP,\ABSdisplavP) node [fontscale=3](name) { these files to be distributed to \say{SOFTWARE DEPENDENT} targets.};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%       BLOCKS        %%%%%%%%%%%%%%%%%%%%%%%%%
+
+%BASE
+\draw[fill=orange!30,rounded corners] (\BSdisplah,\BSdisplav) rectangle ++(\BS);
+\path (center)+(\BSdisplah+\BSh,\BSdisplav+\BSv) node [fontscale=2] (name) {BASE};
+%BUILD
+\draw[fill=green!20,rounded corners] (\BDdisplah,\BDdisplav) rectangle ++(\BD);
+\path (center)+(\BDdisplah+\BDh,\BDdisplav+\BDv) node [fontscale=2] (name) {BUILD};
+%SCRATCH
+\draw[fill=blue!15,rounded corners] (\SCdisplah,\SCdisplav) rectangle ++(\SC);
+\path (center)+(\SCdisplah+\SCh,\SCdisplav+\SCv+\SCv/3) node [fontscale=2] (name) {SCRATCH};
+\path (center)+(\SCdisplah+\SCh,\SCdisplav+\SCv-\SCv/3) node [fontscale=1] (name) {"light transport"};
+%DEPENDENT TARGET
+\draw[fill=brown!50,rounded corners] (\DPdisplah,\DPdisplav) rectangle ++(\DP);
+\path (center)+(\DPdisplah+\DPh,\DPdisplav+\DPv+\DPv/2) node [fontscale=2] (name) {SOFTWARE};
+\path (center)+(\DPdisplah+\DPh,\DPdisplav+\DPv) node [fontscale=2] (name) {DEPENDENT};
+\path (center)+(\DPdisplah+\DPh,\DPdisplav+\DPv-\DPv/2) node [fontscale=2] (name) {TARGET};
+%ANOTHER DEPENDENT TARGET
+\draw[fill=brown!50,rounded corners,opacity=0.5,draw=black!50, loosely dashdotted] (\ADPdisplah,\ADPdisplav) rectangle ++(\ADP);
+\path (center)+(\ADPdisplah+\ADPh,\ADPdisplav+\ADPv+\ADPv/2) node [fontscale=2] (name) {SOFTWARE};
+\path (center)+(\ADPdisplah+\ADPh,\ADPdisplav+\ADPv) node [fontscale=2] (name) {DEPENDENT};
+\path (center)+(\ADPdisplah+\ADPh,\ADPdisplav+\ADPv-\ADPv/2) node [fontscale=2] (name) {TARGET};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%       ARROWS        %%%%%%%%%%%%%%%%%%%%%%%%%
+
+%FROM-BASE
+\draw[red!50,ultra thick,arrows={-Stealth}] (-6.5,\BSdisplav+\BSv) to (\BSdisplah,\BSdisplav+\BSv);
+%FROM-SCRATCH
+\draw[blue!50,ultra thick,arrows={-Stealth}] (-6.5,\SCdisplav+\SCv) to (\SCdisplah,\SCdisplav+\SCv);
+%BASE-BUILD
+\draw[orange!100,ultra thick,arrows={-}] (\BSdisplah+\BSh*2+2,\BSdisplav+\BSv) to (\BSdisplah+\BSh*2+2,\BDdisplav+\BDv);
+\draw[orange!100,ultra thick,arrows={-Stealth}] (\BSdisplah+\BSh*2+2,\BDdisplav+\BDv) to (\BDdisplah,\BDdisplav+\BDv);
+%BASE-DEPENDENT TARGET
+\draw[orange!100,ultra thick,arrows={-Stealth}] (\BSdisplah+\BSh*2,\BSdisplav+\BSv) to (\DPdisplah,\DPdisplav+\DPv);
+%BASE-ANOTHER DEPENDENT TARGET
+\draw[orange!100,ultra thick,loosely dashdotted,arrows={-}] (\BSdisplah+\BSh*2+18,\BSdisplav+\BSv) to (\BSdisplah+\BSh*2+18,\ADPdisplav+\ADPv);
+\draw[orange!100,ultra thick,loosely dashdotted,arrows={-Stealth}] (\BSdisplah+\BSh*2+18,\ADPdisplav+\ADPv) to (\ADPdisplah,\ADPdisplav+\ADPv);
+\draw[orange!100,ultra thick,loosely dashdotted,arrows={-}] (\BSdisplah+\BSh*2+18,\BSdisplav+\BSv) to (\BSdisplah+\BSh*2+18,\ADPdisplav+\ADPv*4);
+
+% ANOTHER DEPENDENT TARGET
+\draw[brown!50,ultra thick,loosely dashdotted,arrows={-}] (\ADPdisplah+\ADPh,\ADPdisplav+\ADPv*2.5) to (\ADPdisplah+\ADPh,\ADPdisplav+\ADPv*4);
+
+%BUILD-SCRATCH
+\draw[black,ultra thick,arrows={-Stealth}] (\BDdisplah+2*\BDh,\BDdisplav+\BDv) to [bend left]  (\SCdisplah+\SCh,\SCdisplav+2*\SCv);
+%SCRATCH-DEPENDENT TARGET
+\draw[black,ultra thick,arrows={-}] (\SCdisplah+\SCh,\SCdisplav) to [bend right]  (\SCdisplah+3*\SCh,\SCdisplav);
+\draw[black,ultra thick,arrows={-Stealth}] (\SCdisplah+3*\SCh,\SCdisplav) to [bend right]  (\DPdisplah+\SCh,\DPdisplav);
+%SCRATCH-ANOTHER DEPENDENT TARGET
+\draw[black,ultra thick,loosely dashdotted,arrows={-}] (\SCdisplah+4.9*\SCh,\SCdisplav+5) to [bend right]  (\ADPdisplah+2.5*\ADPh,\ADPdisplav-2*\ADPv);
+\draw[black,ultra thick,loosely dashdotted,arrows={-Stealth}] (\ADPdisplah+2.5*\ADPh,\ADPdisplav-2*\ADPv) to [bend left]  (\ADPdisplah+\ADPh,\ADPdisplav);
+\draw[black,ultra thick,loosely dashdotted,arrows={-}] (\ADPdisplah+2.5*\ADPh,\ADPdisplav-2*\ADPv) to (\ADPdisplah+2.5*\ADPh,\ADPdisplav+\ADPv*4);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%       CLOUDS        %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\node [cloud, draw,fill=red!20,cloud puffs=10,cloud puff arc=200, aspect=3, inner ysep=1em] at (\LXh,\LXv) {LINUX DISTRO};
+\node [cloud, draw,fill=white!20,cloud puffs=10,cloud puff arc=200, aspect=3, inner ysep=1em] at (\BCh,\BCv) {BARE CONTAINER};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%       TEXT        %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\path (center)+(\FLdisplah,\FLdisplav) node (name) {FROM LINUX DISTRO};
+\path (center)+(\FSdisplah,\FSdisplav) node (name) {FROM SCRATCH};
+\path (center)+(\FBDdisplah,\FBDdisplav) node (name) {FROM BASE};
+\path (center)+(\FBBdisplah,\FBBdisplav) node (name) {FROM BASE};
+\path (center)+(\CBSdisplah,\CBSdisplav) node (name) {COPY};
+\path (center)+(\CSDdisplah,\CSDdisplav) node (name) {COPY};
+
+\begin{pgfonlayer}{background}
+    %BACKGROUND
+    \path [fill=white!20] (\BACKdisplah,\BACKdisplav) rectangle ++(\BACK);
+    %ABSTRACT BACKGROUND
+    \path [fill=gray!5,ultra thick,rounded corners,opacity=0.5,draw=black!50, dotted] (\ABSBACKdisplah,\ABSBACKdisplav) rectangle ++(\ABSBACK);
+\end{pgfonlayer}
+
+\end{tikzpicture}
+
+\end{document}
